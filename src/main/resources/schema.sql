@@ -2,6 +2,7 @@
 CREATE DATABASE IF NOT EXISTS test_spring_mvc_mybatis;
 
 USE test_spring_mvc_mybatis;
+DROP TABLE IF EXISTS t_user;
 
 -- 检查表是否存在
 CREATE TABLE IF NOT EXISTS t_user (
