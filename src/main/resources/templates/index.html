@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理系统</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="jumbotron text-center bg-white shadow-lg rounded p-5">
+        <h1 class="display-4 mb-4 text-primary font-weight-bold">源的实验成果</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <p class="lead mb-5 text-muted">
+                    基于Spring MVC + MyBatis的用户管理系统
+                    <br>
+                    <small class="text-muted">实现了用户的增删改查功能</small>
+                </p>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="features mb-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Spring MVC</h5>
+                            <p class="card-text">使用Spring MVC框架处理Web请求</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">MyBatis</h5>
+                            <p class="card-text">采用MyBatis实现数据持久化</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-info">Thymeleaf</h5>
+                            <p class="card-text">使用Thymeleaf模板引擎渲染页面</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a th:href="@{/user/list}" class="btn btn-primary btn-lg px-5 shadow-sm">
+            开始实验
+            <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+</div>
+
+<!-- 添加自定义样式 -->
+<style>
+    .jumbotron {
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        border-radius: 15px;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+        border-radius: 10px;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .btn-primary {
+        background: linear-gradient(145deg, #007bff 0%, #0056b3 100%);
+        border: none;
+        padding: 15px 40px;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,123,255,0.4) !important;
+    }
+
+    .display-4 {
+        background: linear-gradient(45deg, #007bff, #00ff88);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+    }
+</style>
+</body>
+</html>

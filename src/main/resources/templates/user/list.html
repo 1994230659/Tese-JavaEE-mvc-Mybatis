@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header">
+</head>
+<body>
+<nav th:replace="layout/header :: nav"></nav>
+<div class="container mt-4">
+    <h2>用户列表</h2>
+    <a href="/user/add" class="btn btn-primary mb-3">添加用户</a>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.note}"></td>
+            <td>
+                <a th:href="@{/user/edit/{id}(id=${user.id})}" class="btn btn-sm btn-info">编辑</a>
+                <a th:href="@{/user/delete/{id}(id=${user.id})}"
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('确定要删除吗？')">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

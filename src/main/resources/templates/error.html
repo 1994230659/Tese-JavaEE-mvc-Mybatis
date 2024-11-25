@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>错误页面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="alert alert-danger">
+        <h4 class="alert-heading">发生错误！</h4>
+        <p th:text="${error}">错误信息</p>
+        <hr>
+        <p class="mb-0">
+            <a th:href="@{/}" class="btn btn-outline-danger">返回首页</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
