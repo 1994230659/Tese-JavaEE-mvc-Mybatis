@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.ljy.tesejavaeemvcmybatis.mapper.CourseMapper">
+
+    <resultMap id="BaseResultMap" type="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Course">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="course_name" property="courseName" jdbcType="VARCHAR"/>
+        <result column="course_code" property="courseCode" jdbcType="VARCHAR"/>
+        <result column="credit" property="credit" jdbcType="INTEGER"/>
+        <result column="teacher_id" property="teacherId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="CourseWithTeacherMap" type="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Course" extends="BaseResultMap">
+        <association property="teacher" javaType="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Teacher">
+            <id column="teacher_id" property="id" jdbcType="INTEGER"/>
+            <result column="teacher_name" property="teacherName" jdbcType="VARCHAR"/>
+            <result column="teacher_no" property="teacherNo" jdbcType="VARCHAR"/>
+            <result column="title" property="title" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="CourseWithStudentsMap" type="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Course" extends="BaseResultMap">
+        <collection property="students" ofType="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Student">
+            <id column="student_id" property="id" jdbcType="INTEGER"/>
+            <result column="student_name" property="studentName" jdbcType="VARCHAR"/>
+            <result column="student_no" property="studentNo" jdbcType="VARCHAR"/>
+            <result column="gender" property="gender" jdbcType="INTEGER"/>
+            <result column="grade" property="grade" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_course
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM t_course WHERE id = #{id}
+    </select>
+
+    <select id="selectByIdWithTeacher" resultMap="CourseWithTeacherMap">
+        SELECT
+            c.*,
+            t.teacher_name,
+            t.teacher_no,
+            t.title
+        FROM t_course c
+                 LEFT JOIN t_teacher t ON c.teacher_id = t.id
+        WHERE c.id = #{id}
+    </select>
+
+    <select id="selectByIdWithStudents" resultMap="CourseWithStudentsMap">
+        SELECT
+            c.*,
+            s.id as student_id,
+            s.student_name,
+            s.student_no,
+            s.gender,
+            s.grade
+        FROM t_course c
+                 LEFT JOIN t_student_course sc ON c.id = sc.course_id
+                 LEFT JOIN t_student s ON sc.student_id = s.id
+        WHERE c.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_course (
+            course_name,
+            course_code,
+            credit,
+            teacher_id
+        ) VALUES (
+                     #{courseName},
+                     #{courseCode},
+                     #{credit},
+                     #{teacherId}
+                 )
+    </insert>
+
+    <update id="update">
+        UPDATE t_course
+        SET course_name = #{courseName},
+            course_code = #{courseCode},
+            credit = #{credit},
+            teacher_id = #{teacherId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM t_course WHERE id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.ljy.tesejavaeemvcmybatis.mapper.TeacherMapper">
+
+    <resultMap id="BaseResultMap" type="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Teacher">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="teacher_name" property="teacherName" jdbcType="VARCHAR"/>
+        <result column="teacher_no" property="teacherNo" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="TeacherWithCoursesMap" type="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Teacher" extends="BaseResultMap">
+        <collection property="courses" ofType="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Course">
+            <id column="course_id" property="id" jdbcType="INTEGER"/>
+            <result column="course_name" property="courseName" jdbcType="VARCHAR"/>
+            <result column="course_code" property="courseCode" jdbcType="VARCHAR"/>
+            <result column="credit" property="credit" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_teacher
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM t_teacher WHERE id = #{id}
+    </select>
+
+    <select id="selectByIdWithCourses" resultMap="TeacherWithCoursesMap">
+        SELECT
+            t.*,
+            c.id as course_id,
+            c.course_name,
+            c.course_code,
+            c.credit
+        FROM t_teacher t
+                 LEFT JOIN t_course c ON t.id = c.teacher_id
+        WHERE t.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_teacher (
+            teacher_name,
+            teacher_no,
+            title
+        ) VALUES (
+                     #{teacherName},
+                     #{teacherNo},
+                     #{title}
+                 )
+    </insert>
+
+    <update id="update">
+        UPDATE t_teacher
+        SET teacher_name = #{teacherName},
+            teacher_no = #{teacherNo},
+            title = #{title}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM t_teacher WHERE id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.ljy.tesejavaeemvcmybatis.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Student">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="student_name" property="studentName" jdbcType="VARCHAR"/>
+        <result column="student_no" property="studentNo" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="INTEGER"/>
+        <result column="grade" property="grade" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="StudentWithCoursesMap" type="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Student" extends="BaseResultMap">
+        <collection property="courses" ofType="nuc.edu.cn.ljy.tesejavaeemvcmybatis.entity.Course">
+            <id column="course_id" property="id" jdbcType="INTEGER"/>
+            <result column="course_name" property="courseName" jdbcType="VARCHAR"/>
+            <result column="course_code" property="courseCode" jdbcType="VARCHAR"/>
+            <result column="credit" property="credit" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_student
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM t_student WHERE id = #{id}
+    </select>
+
+    <select id="selectByIdWithCourses" resultMap="StudentWithCoursesMap">
+        SELECT
+            s.*,
+            c.id as course_id,
+            c.course_name,
+            c.course_code,
+            c.credit
+        FROM t_student s
+                 LEFT JOIN t_student_course sc ON s.id = sc.student_id
+                 LEFT JOIN t_course c ON sc.course_id = c.id
+        WHERE s.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_student (
+            student_name,
+            student_no,
+            gender,
+            grade
+        ) VALUES (
+                     #{studentName},
+                     #{studentNo},
+                     #{gender},
+                     #{grade}
+                 )
+    </insert>
+
+    <update id="update">
+        UPDATE t_student
+        SET student_name = #{studentName},
+            student_no = #{studentNo},
+            gender = #{gender},
+            grade = #{grade}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM t_student WHERE id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${student.id == null ? '添加学生' : '编辑学生'}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">学校管理系统</a>
+</nav>
+
+<div class="container mt-4">
+    <h2 th:text="${student.id == null ? '添加学生' : '编辑学生'}"></h2>
+    <form th:action="@{/student/save}" method="post" th:object="${student}">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="form-group">
+            <label>学号</label>
+            <input type="text" class="form-control" th:field="*{studentNo}" required>
+        </div>
+
+        <div class="form-group">
+            <label>姓名</label>
+            <input type="text" class="form-control" th:field="*{studentName}" required>
+        </div>
+
+        <div class="form-group">
+            <label>性别</label>
+            <select class="form-control" th:field="*{gender}">
+                <option value="1">男</option>
+                <option value="2">女</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>年级</label>
+            <input type="text" class="form-control" th:field="*{grade}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="/student/list" class="btn btn-secondary">返回</a>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

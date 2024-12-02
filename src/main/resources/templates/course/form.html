@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${course.id == null ? '添加课程' : '编辑课程'}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">学校管理系统</a>
+</nav>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title" th:text="${course.id == null ? '添加课程' : '编辑课程'}"></h2>
+            <form th:action="@{/course/save}" method="post" th:object="${course}">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label>课程编号</label>
+                    <input type="text" class="form-control" th:field="*{courseCode}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>课程名称</label>
+                    <input type="text" class="form-control" th:field="*{courseName}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>学分</label>
+                    <input type="number" class="form-control" th:field="*{credit}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>任课教师</label>
+                    <select class="form-control" th:field="*{teacherId}" required>
+                        <option value="">-- 请选择教师 --</option>
+                        <option th:each="teacher : ${teachers}"
+                                th:value="${teacher.id}"
+                                th:text="${teacher.teacherName + ' (' + teacher.teacherNo + ')'}">
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">保存</button>
+                <a href="/course/list" class="btn btn-secondary">返回</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

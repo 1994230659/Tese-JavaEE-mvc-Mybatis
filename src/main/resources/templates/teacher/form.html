@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${teacher.id == null ? '添加教师' : '编辑教师'}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">学校管理系统</a>
+</nav>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title" th:text="${teacher.id == null ? '添加教师' : '编辑教师'}"></h2>
+            <form th:action="@{/teacher/save}" method="post" th:object="${teacher}">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label>工号</label>
+                    <input type="text" class="form-control" th:field="*{teacherNo}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>姓名</label>
+                    <input type="text" class="form-control" th:field="*{teacherName}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>职称</label>
+                    <input type="text" class="form-control" th:field="*{title}">
+                </div>
+
+                <button type="submit" class="btn btn-primary">保存</button>
+                <a href="/teacher/list" class="btn btn-secondary">返回</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
